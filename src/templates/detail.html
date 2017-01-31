@@ -13,12 +13,12 @@
 	建議：{{advice}}
 	</p>
 	<a href="{% url 'list' %}"><input type="button" name="Cancel" value="回清單"></a>
-	</br>
-	</br>
+	<hr>
 	<form method="POST" action="">{% csrf_token %}
 		{{form}}
 		<input type="submit" value="送出">
 	</form>
+	<hr>
 	{% for reply in replies %}
 		<li>回覆內容：{{  reply.content }}</br>
 			by {{ reply.user }}
@@ -26,5 +26,6 @@
 	{% empty %}
 		<li>還沒有任何回覆</li>
 	{%  endfor %}
+	
 {% endif %}
 {% endblock %}

@@ -59,7 +59,7 @@ class ReflectionDetailView(DetailView):
 				
 				"form" : form,
 
-				"replies" : Reply.objects.all()
+				"replies" : Reply.objects.filter(reflection=Reflection.objects.get(id=self.kwargs.get('pk')))
 		}
 		return context
 
@@ -74,9 +74,11 @@ class ReflectionDetailView(DetailView):
 					success = True
 					user = request.POST['user']
 					content = request.POST['content']
+					reflection = Reflection.objects.get(id=self.kwargs.get('pk'))
 					Reply.objects.create(
 						user=user,
 						content = content,
+						reflection = reflection,
 					)
 					
 				return super(ReflectionDetailView, self).dispatch(request, *args, **kwargs)
