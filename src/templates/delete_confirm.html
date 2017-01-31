@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+    <p>你確定要刪除這則意見嗎?</p>
+    <p>
+	時間：{{object.timestamp}}</br>
+	姓名：{{object.name}}</br>
+	email:{{object.email}}</br>
+	類別：{{object.category}}</br>
+	內容：{{object.content}}</br>
+	建議：{{object.advice}}
+	</p>
+    <input type="submit" value="確定" />
+    <a href="{% url 'list' %}"><input type="button" name="Cancel" value="取消"></a>
+</form>
+{% endblock %}

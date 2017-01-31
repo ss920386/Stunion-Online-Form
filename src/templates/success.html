@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/angular-material.css'%}">
+	<link rel="stylesheet" type="text/css" href="https://material.angularjs.org/1.1.1/docs.css">	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+{% endblock %}
+{% block content %}
+<div class="row boxing"> 
+	<div class="col-md-8 col-md-offset-2 ">
+		<h1>繳交成功！</h1>
+		<p>福利部收到您的問題了，我們將會努力地解決它迪～</p>
+	</div>
+</div>
+	<footer>
+		<a href="{% url 'auth_login' %}">學聯會登入</a>
+	</footer>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+<a href="{% url 'auth_logout' %}">登出</a>
+	<h1>學聯會回饋管理頁面</h1>
+	<table class='table'>
+		{% for object in object_list %}
+			<tr><td> {{object.timestamp}}</br>{{object.name}}&nbsp;|&nbsp;{{object.email}}</br>{{object.category}}</br>{{object.content}}</br>{{object.advice}}</br>
+			<a href='/stunion/{{object.id}}'>詳細</a>&nbsp;|&nbsp;
+			<a href='/stunion/{{object.id}}/delete'>刪除</a></td></tr>
+
+			{% empty %}
+				<li>目前還沒有任何意見喔</li>
+				
+		{% endfor %}
+	</table>
+
+{% endif %}
+{% endblock %}

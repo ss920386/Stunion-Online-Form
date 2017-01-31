@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/angular-material.css'%}">
+	<link rel="stylesheet" type="text/css" href="https://material.angularjs.org/1.1.1/docs.css">	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+{% endblock %}
+{% block content %}
+
+<h1 class="text-align-center">{{title}}</h1>
+<div class="row">
+<div ng-controller="formCtrl" ng-cloak="" class="checkboxSyncing col-md-10 col-md-offset-1" ng-app="MyApp">
+	<form method="POST" action="" name="userForm">{% csrf_token %}
+		<md-content layout-padding="">
+			<div layout-gt-sm="row">
+				<md-input-container flex-gt-sm="" class="md-block">
+					<label>電郵</label>
+					<input ng-model="user.email" name="email" id="email" minlength="10" maxlength="100" required = "" ng-pattern="/^.+@.+\..+$/" type="email">
+					<div ng-messages="userForm.email.$error" role="alert">
+	<!-- 					<div ng-messages-exp="['required' , 'minlength','maxlength','pattern']" ></div> -->
+						<div ng-message="required">
+							我們需要您的電郵來與您聯繫
+						</div>
+						<div ng-message="pattern">
+							你的電郵需要長得想電郵才行...
+						</div>
+						<div ng-message="maxlength">
+							電郵長度必須小於 100個字
+						</div>		
+						<div ng-message="minlength">
+							電郵長度必須小於 10個字
+						</div>
+					</div>
+				</md-input-container>
+			</div>
+			<div layout-gt-sm="row">
+				<md-input-container flex-gt-sm="" class="md-block">
+					<label>姓名</label>
+					<input ng-model="user.name" name="name" id="name" minlength="2" maxlength="100" >
+					<div class="hint" ng-if="showHints">我們該如何稱呼你？</div>
+				</md-input-container>
+			</div>
+			<div layout-gt-sm="row" >
+				<div flex-gt-sm="30">
+					<label>請問您的議題是關於什麼類別</label>
+					<md-select ng-model="user.category" placeholder="問題類別" class="md-no-underline" required="" md-no-asterisk="false">
+					    <md-option value="FACILITY">學校設備</md-option>
+					    <md-option value="RESTAURANT">餐廳食物</md-option>
+					    <md-option value="ACADEMY">課業學習</md-option>
+					    <md-option value="ACTIVITY">學生活動</md-option>
+					    <md-option value="OTHER">其他</md-option>
+					</md-select>
+					<input ng-model="user.category" name="category" id="category" minlength="10" maxlength="100" style="display:none;">
+				</div>
+	  		</div>
+			<div layout-gt-sm="row">
+				<md-input-container flex-gt-sm="" class="md-block">
+					<label>意見內容</label>
+					<textarea ng-model="user.content" name="content" id="content"  md-maxlength="500" rows="5" md-select-on-focus="" required=""></textarea>
+					<div ng-messages="userForm.content.$error">
+						<div ng-message="required">
+							您必須填寫議題內容
+						</div>
+					</div>
+				</md-input-container>	
+			</div>
+			<div layout-gt-sm="row">
+				<md-input-container flex-gt-sm="" class="md-block">
+					<label>建議</label>
+					<textarea ng-model="user.suggestions" name="suggestion" id="suggestion"  md-maxlength="500" rows="5" md-select-on-focus="" ></textarea>
+					<div class="hint" ng-if="showHints">
+						<!-- some hints message here -->
+					</div>
+				</md-input-container>	
+			</div>
+
+			<div layout-gt-sm="row" class="text-align-center" layout-align="center center" >
+				<md-button type="submit" class="md-raised md-warn">送出</md-button>
+			</div>
+		</md-content>
+	<!-- {{form.as_p}} -->
+	</form>
+	</div>
+
+</div>
+	<footer>
+		<a href="{% url 'auth_login' %}">學聯會登入</a>
+	</footer>
+	<script type="text/javascript" src="{% static 'js/angular.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/angular-route.min.js'%}"></script>
+	<script type="text/javascript" src="{% static 'js/angular-aria.min.js'%}"></script>
+	<script type="text/javascript" src="{% static 'js/angular-animate.min.js'%}"></script>
+	<script type="text/javascript" src="{% static 'js/home.js' %}"></script>
+	<script src="{% static 'js/angular-messages.min.js' %}"></script>
+	<script src="{% static 'js/svg-assets-cache.js' %}"></script>
+	<script src="{% static 'js/angular-material.js' %}"></script>
+{% endblock %}

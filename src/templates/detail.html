@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+{% if request.user.is_authenticated %}
+	<p>
+	時間：{{timestamp}}</br>
+	姓名：{{name}}</br>
+	email:{{email}}</br>
+	類別：{{category}}</br>
+	內容：{{content}}</br>
+	建議：{{advice}}
+	</p>
+	<a href="{% url 'list' %}"><input type="button" name="Cancel" value="回清單"></a>
+	</br>
+	</br>
+	<form method="POST" action="">{% csrf_token %}
+		{{form}}
+		<input type="submit" value="送出">
+	</form>
+	{% for reply in replies %}
+		<li>回覆內容：{{  reply.content }}</br>
+			by {{ reply.user }}
+		</li>
+	{% empty %}
+		<li>還沒有任何回覆</li>
+	{%  endfor %}
+{% endif %}
+{% endblock %}

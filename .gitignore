@@ -1,0 +1,10 @@
+myVENV/
+Scripts/
+src/onlineform/*.pyc
+src/reflect/*.pyc
+onlineform.sublime-workspace
+onlineform.sublime-project
+pip-selfcheck.json
+src/onlineform/secrets.py
+.idea/
+src/onlineform/__pycache__/*.pyc
