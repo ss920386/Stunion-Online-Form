@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from reflect.forms import ReflectionForm, ReplyForm
 from django.shortcuts import redirect
-from .models import Reflection, Reply, FirstVisit
+from .models import Reflection, Reply
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import DeleteView
@@ -24,23 +24,14 @@ def home(request):
 			name = name,
 			email = email,
 			content = content,
-			advice=suggestion
+			advice=suggestion,
+			state=0,
 			)
 		return redirect('/success/')
 	return render(request, "home.html",locals())
 
 def success(request):
 	return render(request,"success.html")
-	
-# def stunion(request):
-# 	if request.user.is_authenticated:
-# 		queryset = Reflection.objects.all()
-# 		context={
-# 			"queryset" : queryset,
-# 		}
-# 		return render(request, "stunion.html",context)
-# 	else:
-# 		return redirect('auth_login')
 
 class ReflectionDetailView(DetailView):
 	queryset = Reflection.objects.all()
@@ -49,17 +40,17 @@ class ReflectionDetailView(DetailView):
 
 	def get_context_data(self, **kwargs):
 		form = ReplyForm
+		reflection = Reflection.objects.get(id=self.kwargs.get('pk'))
 		context = {
-				"timestamp" : Reflection.objects.values_list('timestamp', flat=True).get(id=self.kwargs.get('pk')),
-				"name" : Reflection.objects.values_list('name', flat=True).get(id=self.kwargs.get('pk')),
-				"email" : Reflection.objects.values_list('email', flat=True).get(id=self.kwargs.get('pk')),
-				"category" : Reflection.objects.values_list('category', flat=True).get(id=self.kwargs.get('pk')),
-				"advice" : Reflection.objects.values_list('advice', flat=True).get(id=self.kwargs.get('pk')),
-				"content" : Reflection.objects.values_list('content', flat=True).get(id=self.kwargs.get('pk')),
-				
+				"timestamp" : getattr(reflection, 'timestamp'),
+				"name" : getattr(reflection, 'name'),
+				"email" : getattr(reflection, 'email'),
+				"category" : getattr(reflection, 'category'),
+				"advice" : getattr(reflection, 'advice'),
+				"content" : getattr(reflection, 'content'),
+				"state" : getattr(reflection, 'state'),
 				"form" : form,
-
-				"replies" : Reply.objects.filter(reflection=Reflection.objects.get(id=self.kwargs.get('pk')))
+				"replies" : Reply.objects.filter(reflection=Reflection.objects.get(id=self.kwargs.get('pk'))),
 		}
 		return context
 
@@ -68,17 +59,17 @@ class ReflectionDetailView(DetailView):
 
 	def dispatch(self, request, *args, **kwargs):
 		if self.request.user.is_authenticated:
-			#First Visted
-			if not FirstVisit.objects.exists():
-				reflection = Reflection.objects.get(id=self.kwargs.get('pk'))
+			reflection = Reflection.objects.get(id=self.kwargs.get('pk'))
+
+			#First Visted Handling
+			if getattr(reflection, 'state') == 0:
 				Reply.objects.create(
 						user="系統自動產生",
 						content = "已收到意見",
 						reflection = reflection,
 					)
-				FirstVisit.objects.create(
-					reflection = reflection,
-					)
+				setattr(reflection, 'state', '1')	#state=1 read
+				reflection.save()
       		
 			#Form is submitted
 			form = ReplyForm(self.request.POST or None)	

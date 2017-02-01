@@ -8,10 +8,23 @@
 	<h1>學聯會回饋管理頁面</h1>
 	<table class='table'>
 		{% for object in object_list %}
-			<tr><td> {{object.timestamp}}</br>{{object.name}}&nbsp;|&nbsp;{{object.email}}</br>{{object.category}}</br>{{object.content}}</br>{{object.advice}}</br>
-			<a href='/stunion/{{object.id}}'>詳細</a>&nbsp;|&nbsp;
-			<a href='/stunion/{{object.id}}/delete'>刪除</a></td></tr>
+			{% if object.state == 0 %}
+			<tr class="unread_reflection" bgcolor="FFA69E">
+			{% elif object.state == 1 %}
+			<tr class="read_reflection" bgcolor="FAF3DD">
+			{% elif object.state == 2 %}
+			<tr class="finished_reflection" bgcolor="B8F2E6">
+			<!-- {% else %}
+				<tr> -->
+			{% endif %}
+				<td>
+				{{object.timestamp}}</br>{{object.name}}&nbsp;|&nbsp;{{object.email}}</br>{{object.category}}</br>{{object.content}}</br>{{object.advice}}</br>{{object.id}}</br>
+				<a href='/stunion/{{object.id}}'>詳細</a>&nbsp;|&nbsp;
+				<a href='/stunion/{{object.id}}/delete'>刪除</a>
+				</td>
+			</tr>
 
+			
 			{% empty %}
 				<li>目前還沒有任何意見喔</li>
 				
