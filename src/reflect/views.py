@@ -50,6 +50,7 @@ class ReflectionDetailView(DetailView):
 				"content" : getattr(reflection, 'content'),
 				"state" : getattr(reflection, 'state'),
 				"form" : form,
+				"id" : self.kwargs.get('pk'),
 				"replies" : Reply.objects.filter(reflection=Reflection.objects.get(id=self.kwargs.get('pk'))),
 		}
 		return context
@@ -73,7 +74,7 @@ class ReflectionDetailView(DetailView):
       		
 			#Form is submitted
 			form = ReplyForm(self.request.POST or None)	
-			if request.POST:
+			if 'Reply' in request.POST:
 				if form.is_valid():
 					success = True
 					user = request.POST['user']
@@ -84,8 +85,18 @@ class ReflectionDetailView(DetailView):
 						content = content,
 						reflection = reflection,
 					)
-					
+					return super(ReflectionDetailView, self).dispatch(request, *args, **kwargs)
+			#Finished
+			elif 'Finish' in request.POST:
+				Reply.objects.create(
+						user="系統自動產生",
+						content = "已完成此項意見處理",
+						reflection = reflection,
+					)
+				setattr(reflection, 'state', '2')	#state=2 finished
+				reflection.save()
 				return super(ReflectionDetailView, self).dispatch(request, *args, **kwargs)
+		#not logged in
 		else:
 			return redirect('auth_login')
 		return super(ReflectionDetailView, self).dispatch(request, *args, **kwargs)

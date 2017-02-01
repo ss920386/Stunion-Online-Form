@@ -6,19 +6,30 @@
 {% if request.user.is_authenticated %}
 <a href="{% url 'auth_logout' %}">登出</a>
 	<h1>學聯會回饋管理頁面</h1>
+	<p>
+	<span style="background-color:#FFA69E">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;未讀取&nbsp;&nbsp;
+	<span style="background-color:#B8F2E6">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;處理中&nbsp;&nbsp;
+	<span style="background-color:#FAF3DD">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;已完成&nbsp;&nbsp;
+	</p>
 	<table class='table'>
 		{% for object in object_list %}
 			{% if object.state == 0 %}
-			<tr class="unread_reflection" bgcolor="FFA69E">
+			<tr class="unread_reflection" bgcolor="FFA69E"><td>
+			狀態：未讀</br>
 			{% elif object.state == 1 %}
-			<tr class="read_reflection" bgcolor="FAF3DD">
+			<tr class="read_reflection" bgcolor="B8F2E6"><td>
+			狀態：處理中</br>
 			{% elif object.state == 2 %}
-			<tr class="finished_reflection" bgcolor="B8F2E6">
-			<!-- {% else %}
-				<tr> -->
+			<tr class="finished_reflection" bgcolor="FAF3DD"><td>
+			狀態：已完成</br>
+			{% else %}
+				<tr><td>
 			{% endif %}
-				<td>
-				{{object.timestamp}}</br>{{object.name}}&nbsp;|&nbsp;{{object.email}}</br>{{object.category}}</br>{{object.content}}</br>{{object.advice}}</br>{{object.id}}</br>
+				{{object.timestamp}}</br>
+				{{object.name}}&nbsp;|&nbsp;{{object.email}}</br>
+				{{object.category}}</br>
+				{{object.content}}</br>
+				{{object.advice}}</br>
 				<a href='/stunion/{{object.id}}'>詳細</a>&nbsp;|&nbsp;
 				<a href='/stunion/{{object.id}}/delete'>刪除</a>
 				</td>

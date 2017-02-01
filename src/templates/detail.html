@@ -10,23 +10,39 @@
 	email:{{email}}</br>
 	類別：{{category}}</br>
 	內容：{{content}}</br>
-	建議：{{advice}}
+	建議：{{advice}}</br>
+	{% if state == 0 %}
+	狀態：未讀</br>
+	{% elif state == 1 %}
+	狀態：處理中</br>
+	{% elif state == 2 %}
+	狀態：已完成</br>
+	{% endif %}
+	<a href="{% url 'list' %}"><input type="button" name="Return" value="回清單"></a>
 	</p>
-	<a href="{% url 'list' %}"><input type="button" name="Cancel" value="回清單"></a>
+
+	{% if not state == 2 %}
+	<form method="POST" action="">{% csrf_token %}	
+		<input type="submit" name="Finish" value="已完成">
+	</form>
 	<hr>
+	
 	<form method="POST" action="">{% csrf_token %}
 		{{form}}
-		<input type="submit" value="送出">
+		<input type="submit" name="Reply" value="送出">
 	</form>
+	{% endif %}
 
 	<table class='table'>
 		<tr>
 			<td>回覆人</td>
+			<td>回覆時間</td>
 			<td>回覆內容</td>
 		</tr>
 		{% for reply in replies %}
 		<tr>
 			<td>{{  reply.user }}</td>
+			<td>{{  reply.timestamp }}</td>
 			<td>{{ reply.content }}</td>
 		</tr>
 		{% empty %}
