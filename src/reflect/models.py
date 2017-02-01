@@ -32,3 +32,6 @@ class Reply(models.Model):
 	#reflectionID = models.IntegerField(unique=True) # 該問題的id
 	def __str__(self):
 		return str(self.timestamp)
+
+class FirstVisit(models.Model):
+	reflection = models.ForeignKey(Reflection, on_delete=models.CASCADE, default=None, null=True)

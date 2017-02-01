@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from reflect.forms import ReflectionForm, ReplyForm
 from django.shortcuts import redirect
-from .models import Reflection, Reply
+from .models import Reflection, Reply, FirstVisit
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import DeleteView
@@ -68,6 +68,19 @@ class ReflectionDetailView(DetailView):
 
 	def dispatch(self, request, *args, **kwargs):
 		if self.request.user.is_authenticated:
+			#First Visted
+			if not FirstVisit.objects.exists():
+				reflection = Reflection.objects.get(id=self.kwargs.get('pk'))
+				Reply.objects.create(
+						user="系統自動產生",
+						content = "已收到意見",
+						reflection = reflection,
+					)
+				FirstVisit.objects.create(
+					reflection = reflection,
+					)
+      		
+			#Form is submitted
 			form = ReplyForm(self.request.POST or None)	
 			if request.POST:
 				if form.is_valid():
