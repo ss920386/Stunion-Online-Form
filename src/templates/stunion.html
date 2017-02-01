@@ -12,27 +12,47 @@
 	<span style="background-color:#FAF3DD">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;已完成&nbsp;&nbsp;
 	</p>
 	<table class='table'>
+		<tr>
+			<td>狀態</td>
+			<td>時間</td>
+			<td>名字</td>
+			<td>信箱</td>
+			<td>類別</td>
+			<td>內容</td>
+			<td>建議</td>
+			<td>詳細</td>
+			<td>刪除</td>
+		</tr>
 		{% for object in object_list %}
 			{% if object.state == 0 %}
-			<tr class="unread_reflection" bgcolor="FFA69E"><td>
-			狀態：未讀</br>
+			<tr class="unread_reflection" bgcolor="FFA69E">
 			{% elif object.state == 1 %}
-			<tr class="read_reflection" bgcolor="B8F2E6"><td>
-			狀態：處理中</br>
+			<tr class="read_reflection" bgcolor="B8F2E6">
 			{% elif object.state == 2 %}
-			<tr class="finished_reflection" bgcolor="FAF3DD"><td>
-			狀態：已完成</br>
+			<tr class="finished_reflection" bgcolor="FAF3DD">
 			{% else %}
-				<tr><td>
+			<tr>
 			{% endif %}
-				{{object.timestamp}}</br>
-				{{object.name}}&nbsp;|&nbsp;{{object.email}}</br>
-				{{object.category}}</br>
-				{{object.content}}</br>
-				{{object.advice}}</br>
-				<a href='/stunion/{{object.id}}'>詳細</a>&nbsp;|&nbsp;
-				<a href='/stunion/{{object.id}}/delete'>刪除</a>
-				</td>
+
+			<td>
+				{% if object.state == 0 %}
+				狀態：未讀
+				{% elif object.state == 1 %}
+				狀態：處理中
+				{% elif object.state == 2 %}
+				狀態：已完成
+				{% else %}
+				狀態 ：
+				{% endif %}
+			</td>
+			<td>{{object.timestamp}}</td>
+			<td>{{object.name}}</td>
+			<td>{{object.email}}</td>
+			<td>{{object.category}}</td>
+			<td>{{object.content}}</td>
+			<td>{{object.advice}}</td>
+			<td><a href='/stunion/{{object.id}}'>詳細</a></td>
+			<td><a href='/stunion/{{object.id}}/delete'>刪除</a></td>
 			</tr>
 
 			
