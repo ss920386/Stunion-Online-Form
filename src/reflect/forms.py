@@ -1,4 +1,5 @@
 from django import forms
+from django.db import models
 from .models import Reflection, Reply
 
 def set_field_html_name(cls, new_name):

@@ -101,24 +101,35 @@ class ReflectionDetailView(DetailView):
 			return redirect('auth_login')
 		return super(ReflectionDetailView, self).dispatch(request, *args, **kwargs)
 
-
-	# def render_to_response(self, context):
-	# 	if self.request.user.is_authenticated:
-	# 		form = ReplyForm
-			
-
 class ReflectionListView(ListView):
 	queryset = Reflection.objects.all()
 	template_name = "stunion.html"
 
 	def get_context(self):
-		queryset = Reflection.objects.all()
+		all_reflections = Reflection.objects.all()
 		context={
-				"queryset" : queryset,
+				"reflection_list" : all_reflections,
 			}
+
+	def post(self, request, *args, **kwargs):
+		return self.get(request, *args, **kwargs)
 
 	def render_to_response(self, context):
 		if self.request.user.is_authenticated:
+			if 'selector' in self.request.POST:
+				select = self.request.POST.get('list_selector')
+				if(select=="all"):
+					queryset = Reflection.objects.all()
+				elif(select=="unread"):
+					queryset = Reflection.objects.filter(state=0)
+				elif(select=="handling"):
+					queryset = Reflection.objects.filter(state=1)
+				elif(select=="finished"):
+					queryset = Reflection.objects.filter(state=2)
+				filtered_context={
+					"reflection_list" :queryset,
+				}
+				return super(ReflectionListView, self).render_to_response(filtered_context)
 			return super(ReflectionListView, self).render_to_response(context)
 		else:
 			return redirect('auth_login')
