@@ -7,7 +7,8 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django.core.urlresolvers import reverse
-
+from reflect.email import notify_email
+from django.utils import timezone
 
 def home(request):
 	title = "交大線上意見回饋表單"
@@ -27,6 +28,7 @@ def home(request):
 			advice=suggestion,
 			state=0,
 			)
+		notify_email(email,content)
 		return redirect('/success/')
 	return render(request, "home.html",locals())
 
@@ -69,6 +71,7 @@ class ReflectionDetailView(DetailView):
 						content = "已收到意見",
 						reflection = reflection,
 					)
+
 				setattr(reflection, 'state', '1')	#state=1 read
 				reflection.save()
       		
@@ -85,6 +88,7 @@ class ReflectionDetailView(DetailView):
 						content = content,
 						reflection = reflection,
 					)
+
 					return super(ReflectionDetailView, self).dispatch(request, *args, **kwargs)
 			#Finished
 			elif 'Finish' in request.POST:
