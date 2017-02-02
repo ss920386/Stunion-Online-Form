@@ -7,7 +7,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django.core.urlresolvers import reverse
-from reflect.email import notify_email
+from reflect.email import notify_email,send_reply
 from django.utils import timezone
 
 def home(request):
@@ -88,7 +88,7 @@ class ReflectionDetailView(DetailView):
 						content = content,
 						reflection = reflection,
 					)
-
+					send_reply(reflection.content,reflection.email,content)
 					return super(ReflectionDetailView, self).dispatch(request, *args, **kwargs)
 			#Finished
 			elif 'Finish' in request.POST:
