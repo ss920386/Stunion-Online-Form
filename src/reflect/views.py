@@ -106,13 +106,18 @@ class ReflectionDetailView(DetailView):
 		return super(ReflectionDetailView, self).dispatch(request, *args, **kwargs)
 
 class ReflectionListView(ListView):
-	queryset = Reflection.objects.all()
+	queryset = Reflection.objects.all().order_by('timestamp').reverse()
 	template_name = "stunion.html"
 
 	def get_context(self):
-		all_reflections = Reflection.objects.all()
+		if self.request.user.is_authenticated:
+			user = self.request.user.username
+		else:
+			user = None
+		all_reflections = Reflection.objects.all().order_by('timestamp').reverse()
 		context={
 				"reflection_list" : all_reflections,
+				"username":user,
 			}
 
 	def post(self, request, *args, **kwargs):
@@ -120,18 +125,20 @@ class ReflectionListView(ListView):
 
 	def render_to_response(self, context):
 		if self.request.user.is_authenticated:
+			user = self.request.user.username
 			if 'selector' in self.request.POST:
 				select = self.request.POST.get('list_selector')
 				if(select=="all"):
-					queryset = Reflection.objects.all()
+					queryset = Reflection.objects.all().order_by('timestamp').reverse()
 				elif(select=="unread"):
-					queryset = Reflection.objects.filter(state=0)
+					queryset = Reflection.objects.filter(state=0).order_by('timestamp').reverse()
 				elif(select=="handling"):
-					queryset = Reflection.objects.filter(state=1)
+					queryset = Reflection.objects.filter(state=1).order_by('timestamp').reverse()
 				elif(select=="finished"):
-					queryset = Reflection.objects.filter(state=2)
+					queryset = Reflection.objects.filter(state=2).order_by('timestamp').reverse()
 				filtered_context={
 					"reflection_list" :queryset,
+					"username":user,
 				}
 				return super(ReflectionListView, self).render_to_response(filtered_context)
 			return super(ReflectionListView, self).render_to_response(context)
