@@ -9,3 +9,6 @@ src/onlineform/secrets.py
 .idea/
 src/reflect/__pycache__/*.pyc
 src/onlineform/__pycache__/*.pyc
+question-nginx.conf
+src/reflect/__pycache__/
+uwsgi_params
