@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static %}
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
+{% endblock %}
 {% block content %}
-<p class='text-align-center lead'>You have successfully logged out.</p><p class='text-align-center lead'><a href="{% url 'auth_login' %}">再次登入</a>&nbsp;|&nbsp;<a href="/">一般學生身分給回饋意見</a></p></p>
+<div class="row boxing"> 
+	<div class="col-md-8 col-md-offset-2 ">
+		<p class='text-align-center lead'>You have successfully logged out.</p><p class='text-align-center lead'><a href="{% url 'auth_login' %}">再次登入</a>&nbsp;|&nbsp;<a href="/">一般學生身分給回饋意見</a></p></p>
+	</div>
+</div>
 {% endblock %}

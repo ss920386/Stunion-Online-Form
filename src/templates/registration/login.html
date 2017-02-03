@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static %}
+{% block header %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/angular-material.css'%}">
+	<link rel="stylesheet" type="text/css" href="https://material.angularjs.org/1.1.1/docs.css">	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
+{% endblock %}
 {% block content %}
 
 <div class='row'>
