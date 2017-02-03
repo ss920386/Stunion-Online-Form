@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from background_task import background
 import smtplib
 from email.mime.multipart import MIMEMultipart

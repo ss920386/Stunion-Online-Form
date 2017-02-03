@@ -11,4 +11,6 @@ src/reflect/__pycache__/*.pyc
 src/onlineform/__pycache__/*.pyc
 question-nginx.conf
 src/reflect/__pycache__/
+src/reflect/migrations/__pycache__/
 uwsgi_params
+src/reflect/migrations/*.py

@@ -1,4 +1,6 @@
-from django.shortcuts import render,get_object_or_404
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from django.shortcuts import render
 from reflect.forms import ReflectionForm, ReplyForm
 from django.shortcuts import redirect
 from .models import Reflection, Reply
@@ -8,7 +10,6 @@ from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
 from django.core.urlresolvers import reverse
 from reflect.email import notify_email,send_reply
-from django.utils import timezone
 
 def home(request):
 	title = "交大線上意見回饋表單"
