@@ -3,56 +3,89 @@
 {% load static %}
 
 {% block content %}
+
 {% if request.user.is_authenticated %}
-	<p>
-	時間：{{timestamp}}</br>
-	姓名：{{name}}</br>
-	email:{{email}}</br>
-	類別：{{category}}</br>
-	內容：{{content}}</br>
-	建議：{{advice}}</br>
-	{% if state == 0 %}
-	狀態：未讀</br>
-	{% elif state == 1 %}
-	狀態：處理中</br>
-	{% elif state == 2 %}
-	狀態：已完成</br>
-	{% endif %}
-	<a href="{% url 'list' %}"><input type="button" name="Return" value="回清單"></a>
-	</p>
-
-	{% if not state == 2 %}
-	<form method="POST" action="">{% csrf_token %}	
-		<input type="submit" name="Finish" value="已完成">
-	</form>
-	<hr>
+  <header>
+    <ol class="breadcrumb">
+      <li> <a href="#">問題列表</a></li>
+      <li class="active">問題詳情</li>
+    </ol>
+  </header>
+  <div id="content">
+    <h1>學聯會回饋管理頁面</h1>
+    <div class="box">
+      <div class="body">
+      		<div class="row">
+      			<div class="col-sm-3">電子郵件 <p>{{ email }}</p></div>
+      			<div class="col-sm-2">類別 <p>{{ category }}</p></div>
+      			<div class="col-sm-3">表單填寫時間<p>{{ timestamp }}</p></div>
+      			<div class="col-sm-2">
+      				狀態
+      				<p>
+      				{% if state == 0 %}
+						未讀
+					{% elif state == 1 %}
+						處理中
+					{% elif state == 2 %}
+						已完成
+					{% endif %}
+      				</p>
+      			</div>
+      			<div class="col-sm-2">		
+      			{% if not state == 2 %}
+					<form method="POST" action="">{% csrf_token %}	
+						<input type="submit" name="Finish" value="標記成已完成" class="btn btn-detail">
+					</form>
+				{% endif %}
+				<a href="{% url 'list' %}"><input type="button" class="btn btn-detail" name="Return" value="回清單"></a>
+				</div>
+      		</div>
+		<hr>
+		<div class="questions-box">
+			<h2>意見描述</h2>
+			<span>{{ content  }}</span>
+			<h2>建議方向</h2>
+			<span>{{ advice }}</span>
+		</div>
+		<hr>
+		{% if not state == 2%}
+		<form method="POST" action="" class="form">{% csrf_token %}
+			<p>{{  form.user.label }}</p>
+			<p>{{ form.user }}</p>	
 	
-	<form method="POST" action="">{% csrf_token %}
-		{{form}}
-		<input type="submit" name="Reply" value="送出">
-	</form>
-	{% endif %}
+			<p>{{ form.content.label}}</p>
+			<div class="row">
+				<div class="col-sm-10">
+					{{ form.content }}					
+				</div>
+				<div class="col-sm-2">
+					<input type="submit" name="Reply" value="送出" class="btn btn-detail">
+				</div>
+		</form>
+		{% endif %}
 
-	<table class='table'>
-		<tr>
-			<td>回覆人</td>
-			<td>回覆時間</td>
-			<td>回覆內容</td>
-		</tr>
-		{% for reply in replies %}
-		<tr>
-			<td>{{  reply.user }}</td>
-			<td>{{  reply.timestamp }}</td>
-			<td>{{ reply.content }}</td>
-		</tr>
-		{% empty %}
-		<tr>
-			<td>未有任何回覆</td>
-			<td>無</td>
-		</tr>
-		{%  endfor %}
-	</table>
-		
+		<table class="table">
+			<tr>
+				<td>回覆人</td>
+				<td>回覆時間</td>
+				<td>回覆內容</td>
+			</tr>
+			{% for reply in replies %}
+			<tr>
+				<td>{{  reply.user }}</td>
+				<td>{{  reply.timestamp }}</td>
+				<td>{{ reply.content }}</td>
+			</tr>
+			{% empty %}
+			<tr>
+				<td>未有任何回覆</td>
+				<td>無</td>
+			</tr>
+			{%  endfor %}
+		</table>
+		</div>
+	</div>
+</div>	
 	
 {% endif %}
 {% endblock %}

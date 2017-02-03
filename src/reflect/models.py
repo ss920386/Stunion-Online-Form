@@ -19,7 +19,7 @@ class Reflection(models.Model):
 	advice = models.TextField(max_length=500, blank = True, null = True)
 	timestamp = models.DateTimeField(auto_now=True)
 	state = models.IntegerField(default = 0)
-
+	important = models.BooleanField(default=False)
 	#replies = models.ManyToManyField(Reply)
 
 	def __str__(self):

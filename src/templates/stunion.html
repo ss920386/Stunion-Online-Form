@@ -57,6 +57,11 @@
 							{% endif %}
 
 							<td>
+								{% if object.important %}
+									<i class="fa fa-star"></i>
+								{% else %}
+									<i class="fa fa-star-o"></i>
+								{% endif %}
 								{% if object.state == 0 %}
 								狀態：未讀
 								{% elif object.state == 1 %}

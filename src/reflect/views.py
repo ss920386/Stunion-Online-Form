@@ -124,6 +124,7 @@ class ReflectionListView(ListView):
 		return self.get(request, *args, **kwargs)
 
 	def render_to_response(self, context):
+
 		if self.request.user.is_authenticated:
 			user = self.request.user.username
 			if 'selector' in self.request.POST:
@@ -141,6 +142,9 @@ class ReflectionListView(ListView):
 					"username":user,
 				}
 				return super(ReflectionListView, self).render_to_response(filtered_context)
+			if 'important' in self.request.POST:
+				mark = self.request.POST.get('id')
+
 			return super(ReflectionListView, self).render_to_response(context)
 		else:
 			return redirect('auth_login')
@@ -156,3 +160,4 @@ class ReflectDeleteView(DeleteView):
     		return super(ReflectDeleteView, self).render_to_response(context)
     	else:
     		return redirect('auth_login')
+

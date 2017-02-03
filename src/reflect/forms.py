@@ -28,7 +28,6 @@ class ReflectionForm(forms.ModelForm):
             'content': '意見內容',
             'advice': '建議方向',
         }
-
 class ReplyForm(forms.ModelForm):
     class Meta:
         model = Reply
@@ -39,4 +38,7 @@ class ReplyForm(forms.ModelForm):
         labels = {
             'user': '回覆人',
             'content': '意見內容',
+        }
+        widgets={
+            'content':forms.Textarea(attrs={'rows':3}),
         }

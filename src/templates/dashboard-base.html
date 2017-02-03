@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Haus Dashboard</title>
+  
+  
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="{% static 'css/dashboard-style.css' %}">
+
+
+    {% block header%}
+    {% endblock %}  
+</head>
+
+<body>
+  
+<div id="nav">
+  <div class="user-banner">
+    <h5 class="username">{{ user.username }}</h5>
+  </div>
+  <ul>
+    <li class="head">General</li>
+    {% if request.path == '/stunion/' %}<li class="active"> {% else %} <li> {% endif %}<a href="#"><i class="fa fa-fw fa-inbox"></i><span class="swatch light-grey">Inbox</span></a></li>
+    <li><a href="#"><i class="fa fa-fw fa-money"></i><span>Payments</span></a></li>
+    <li><a href="#"><i class="fa fa-fw fa-cog"></i><span>Settings</span></a></li>
+    <li><a href="{% url 'auth_logout' %}"><i class="fa fa-fw fa-user"></i><span>登出<span></a></li>
+  </ul>
+</div>
+<div id="main">
+{% block content %}
+{% endblock %}
+</div>
+    <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>
+    <script src="js/index.js"></script>
+
+</body>
+</html>
