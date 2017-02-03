@@ -22,7 +22,7 @@
     <h5 class="username">{{ user.username }}</h5>
   </div>
   <ul>
-    <li class="head">General</li>
+    <li class="head">功能</li>
     {% if request.path == '/stunion/' %}<li class="active"> {% else %} <li> {% endif %}<a href="{% url 'list' %}"><i class="fa fa-fw fa-inbox"></i><span class="swatch light-grey">Inbox</span></a></li>
     {% if request.path == '/stunion/important/' %}<li class="active"> {% else %} <li> {% endif %}<a href="{% url 'important' %}"><i class="fa fa-fw fa-star"></i><span>標記重要</span></a></li>
     <li><a href="{% url 'auth_logout' %}"><i class="fa fa-fw fa-user"></i><span>登出<span></a></li>

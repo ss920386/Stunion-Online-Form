@@ -13,7 +13,9 @@
     margin-top: 5px;
   }
 }
-
+.selector-filter{
+  text-align:right;
+}
 .form{
   text-align: left;
   input{
@@ -36,6 +38,50 @@
   margin: 3px;
   min-width: 100px;
   background-color: #fafafa; 
+}
+.btn-filter{
+  border-radius: 5px;
+  border-color:#022244;
+  color: #022244;
+  padding: 3px;
+  margin: 3px;
+  margin-left: 10px;
+  margin-top: -1px;
+  min-width: 100px;
+  background-color: #fafafa; 
+}
+select{
+  -webkit-appearance: none;
+  border: 1px solid #BBBBBB;
+  box-shadow: none;
+  padding: 4px 5px 4px 10px;
+  font-size: 15px;
+  width: 100%;
+  background-color: #FFFFFF;
+  background-image: url("https://www.pigeonholelive.com/images/chevron-down.png");
+  background-repeat: no-repeat;
+  background-size: 15px;
+  background-position: right 10px center;
+  color: #555555;
+  border-radius: 2px;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 10px;
+
+  &:disabled {
+    opacity: 0.2;
+  }
+  @media (min-width: 760px) {
+    width: 32%;
+    float: left;
+    margin-bottom: 0;
+          
+    &:not(:last-of-type) {
+      margin-right: 2%;
+    }   
+    &.nth {
+      margin: 0;
+    }
+  }
 }
 .status-row{
   height: 30px;
