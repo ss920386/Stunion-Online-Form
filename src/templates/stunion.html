@@ -13,27 +13,29 @@
     <h1>學聯會回饋管理頁面</h1>
     <div class="box">
       <div class="body">
-			<div>
-				<span style="background-color:#FFA69E">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;未讀取&nbsp;&nbsp;
-				<span style="background-color:#B8F2E6">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;處理中&nbsp;&nbsp;
-				<span style="background-color:#FAF3DD">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;已完成&nbsp;&nbsp;
-			</div>
-			<div>
-				<form action="" method="post">{% csrf_token %}	
-					<select  name="list_selector" > 
-						<option value="all">全</option>
-						<option value="unread">未讀取</option>
-						<option value="handling">處理中</option>
-						<option value="finished">已完成</option>
-					</select>
-				<input type="submit" name="selector" value="篩選"/>
-				</form>
+      		<div class="row">
+				<div class="col-md-6 status-row">
+					<span class="status-unread" ></span><p>未讀取</p>
+					<span class="status-handling"></span><p>處理中</p>
+					<span style="" class="status-finished"></span><p>已完成</p>
+				</div>
+				<div class="col-md-6">
+					<form action="" method="post">{% csrf_token %}	
+						<select  name="list_selector" > 
+							<option value="all">全</option>
+							<option value="unread">未讀取</option>
+							<option value="handling">處理中</option>
+							<option value="finished">已完成</option>
+						</select>
+					<input type="submit" name="selector" value="篩選"/>
+					</form>
+				</div>
 			</div>
 			<div>
 				<table class='table'>
 					{% if reflection_list %}
 						<tr>
-							<td>狀態</td>
+							<td></td>
 							<td>時間</td>
 							<td>名字</td>
 							<td>信箱</td>
@@ -63,7 +65,7 @@
 									<i class="fa fa-star-o"></i>
 								{% endif %}
 								</a>
-								{% if object.state == 0 %}
+<!-- 								{% if object.state == 0 %}
 								狀態：未讀
 								{% elif object.state == 1 %}
 								狀態：處理中
@@ -71,7 +73,7 @@
 								狀態：已完成
 								{% else %}
 								狀態 ：
-								{% endif %}
+								{% endif %} -->
 							</td>
 							<td>{{object.timestamp}}</td>
 							<td>{{object.name}}</td>

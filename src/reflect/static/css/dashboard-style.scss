@@ -37,6 +37,35 @@
   min-width: 100px;
   background-color: #fafafa; 
 }
+.status-row{
+  height: 30px;
+  p{
+    display:inline-block;
+    margin-top: -15px;
+    padding-bottom:15px;
+  }
+}
+span.status-raw{
+  width:20px;
+  height: 20px;
+  margin:0 10px 0 30px;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  display:inline-block;/* important */
+}
+
+.status-finished{
+  @extend .status-raw;
+  background-color:#FAF3DD;
+}
+.status-unread{
+  @extend .status-raw;
+  background-color:#FFA69E;
+}
+.status-handling{
+  @extend .status-raw;
+  background-color:#B8F2E6;
+}
 /** MAIN DASHBOARD CSS **/
 .pull-left {
   float: left;
