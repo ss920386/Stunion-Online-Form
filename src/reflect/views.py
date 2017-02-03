@@ -35,6 +35,14 @@ def home(request):
 def success(request):
 	return render(request,"success.html")
 
+def markImportant(request,pk,template_name="stunion.html"):
+	if request.user.is_authenticated:
+		object = Reflection.objects.get(id= pk)
+		setattr(object,'important',not object.important)
+		object.save()
+		return redirect('/stunion/')
+	return redirect('auth_login')
+
 class ReflectionDetailView(DetailView):
 	queryset = Reflection.objects.all()
 	model = Reflection
@@ -149,6 +157,49 @@ class ReflectionListView(ListView):
 		else:
 			return redirect('auth_login')
     
+class ReflectionListViewImportant(ListView):
+	queryset = Reflection.objects.filter(important=True).order_by('timestamp').reverse()
+	template_name = "stunion.html"
+
+	def get_context(self):
+		if self.request.user.is_authenticated:
+			user = self.request.user.username
+		else:
+			user = None
+		all_reflections = Reflection.objects.filter(important=True).order_by('timestamp').reverse()
+		context={
+				"reflection_list" : all_reflections,
+				"username":user,
+			}
+
+	def post(self, request, *args, **kwargs):
+		return self.get(request, *args, **kwargs)
+
+	def render_to_response(self, context):
+
+		if self.request.user.is_authenticated:
+			user = self.request.user.username
+			if 'selector' in self.request.POST:
+				select = self.request.POST.get('list_selector')
+				if(select=="all"):
+					queryset = Reflection.objects.filter(important=True).order_by('timestamp').reverse()
+				elif(select=="unread"):
+					queryset = Reflection.objects.filter(state=0,important=True).order_by('timestamp').reverse()
+				elif(select=="handling"):
+					queryset = Reflection.objects.filter(state=1,important=True).order_by('timestamp').reverse()
+				elif(select=="finished"):
+					queryset = Reflection.objects.filter(state=2,important=True).order_by('timestamp').reverse()
+				filtered_context={
+					"reflection_list" :queryset,
+					"username":user,
+				}
+				return super(ReflectionListViewImportant, self).render_to_response(filtered_context)
+			if 'important' in self.request.POST:
+				mark = self.request.POST.get('id')
+
+			return super(ReflectionListViewImportant, self).render_to_response(context)
+		else:
+			return redirect('auth_login')
 
 class ReflectDeleteView(DeleteView):
     model = Reflection

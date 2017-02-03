@@ -53,17 +53,15 @@
   padding: 1px 0px 1px 0px;
   background: #68de99;
   text-align: center; }
-
-.user-banner img {
-  display: inline-block;
-  vertical-align: middle;
-  margin-top: 5px;
-  width: 50px;
-  margin-right: 5px;
-  border-radius: 100%; }
-
-.user-banner .username {
-  font-weight: bold; }
+  .user-banner img {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 5px;
+    width: 50px;
+    margin-right: 5px;
+    border-radius: 100%; }
+  .user-banner .username {
+    font-weight: bold; }
 
 /** IMPORT HELPER CSS **/
 /** IMPORT BASE CSS **/

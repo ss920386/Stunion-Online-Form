@@ -7,7 +7,7 @@
 {% if request.user.is_authenticated %}
   <header>
     <ol class="breadcrumb">
-      <li> <a href="#">問題列表</a></li>
+      <li> <a href="{% url 'list' %}">問題列表</a></li>
       <li class="active">問題詳情</li>
     </ol>
   </header>

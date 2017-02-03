@@ -6,8 +6,7 @@
 {% if request.user.is_authenticated %}
   <header>
     <ol class="breadcrumb">
-      <li> <a href="#">{{  request.path }}</a></li>
-      <li class="active">dashboard</li>
+      <li class="active">問題列表</li>
     </ol>
   </header>
   <div id="content">
@@ -57,11 +56,13 @@
 							{% endif %}
 
 							<td>
+								<a href='/stunion/{{object.id}}/mark'>
 								{% if object.important %}
 									<i class="fa fa-star"></i>
 								{% else %}
 									<i class="fa fa-star-o"></i>
 								{% endif %}
+								</a>
 								{% if object.state == 0 %}
 								狀態：未讀
 								{% elif object.state == 1 %}
@@ -75,9 +76,22 @@
 							<td>{{object.timestamp}}</td>
 							<td>{{object.name}}</td>
 							<td>{{object.email}}</td>
-							<td>{{object.category}}</td>
-							<td>{{object.content}}</td>
-							<td>{{object.advice}}</td>
+							<td>
+							{% if object.category == 'ACADEMY' %}
+							<i class="fa fa-book" aria-hidden="true"></i>
+							{% elif object.category == 'RESTAURANT' %}
+							<i class="fa fa-spoon" aria-hidden="true"></i>
+							{% elif object.category == 'FACILITY' %}
+							<i class="fa fa-child" aria-hidden="true"></i>
+							{% elif object.category == 'ACTIVITY' %}
+							<i class="fa fa-child" aria-hidden="true"></i>
+							{% else %}
+							其他
+							{% endif %}
+							</td>
+
+							<td>{{object.content|slice:":10"}}</td>
+							<td>{{object.advice|slice:":10" }}</td>
 							<td><a href='/stunion/{{object.id}}'>詳細</a></td>
 							<td><a href='/stunion/{{object.id}}/delete'>刪除</a></td>
 							</tr>					

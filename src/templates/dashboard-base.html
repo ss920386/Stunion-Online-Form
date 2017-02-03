@@ -3,7 +3,7 @@
 <html >
 <head>
   <meta charset="UTF-8">
-  <title>Haus Dashboard</title>
+  <title>學聯會問題後台</title>
   
   
     <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
@@ -23,9 +23,8 @@
   </div>
   <ul>
     <li class="head">General</li>
-    {% if request.path == '/stunion/' %}<li class="active"> {% else %} <li> {% endif %}<a href="#"><i class="fa fa-fw fa-inbox"></i><span class="swatch light-grey">Inbox</span></a></li>
-    <li><a href="#"><i class="fa fa-fw fa-money"></i><span>Payments</span></a></li>
-    <li><a href="#"><i class="fa fa-fw fa-cog"></i><span>Settings</span></a></li>
+    {% if request.path == '/stunion/' %}<li class="active"> {% else %} <li> {% endif %}<a href="{% url 'list' %}"><i class="fa fa-fw fa-inbox"></i><span class="swatch light-grey">Inbox</span></a></li>
+    {% if request.path == '/stunion/important/' %}<li class="active"> {% else %} <li> {% endif %}<a href="{% url 'important' %}"><i class="fa fa-fw fa-star"></i><span>標記重要</span></a></li>
     <li><a href="{% url 'auth_logout' %}"><i class="fa fa-fw fa-user"></i><span>登出<span></a></li>
   </ul>
 </div>
